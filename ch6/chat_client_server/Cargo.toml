@@ -1,0 +1,22 @@
+[package]
+name = "chatserver_aesgcm"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "chatserver"
+path = "src/bin/chat_server.rs"
+
+[[bin]]
+name = "chatclient"
+path = "src/bin/chat_client.rs"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+aes-gcm = "0.10"
+base64 = "0.22"
+rand = "0.8"
+p256 = { version = "0.13", features = ["ecdh"] } # 타원곡선 암호
+hkdf = "0.12"  # 키 유도 함수
+sha2 = "0.10"  # 해시 함수
+generic-array = "1"
