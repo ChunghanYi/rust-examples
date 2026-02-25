@@ -1,0 +1,33 @@
+// SPDX-License-Identifier: GPL-2.0
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+/ {
+    // BeaglePlay 보드 호환성 명시
+    compatible = "ti,am625", "ti,am625-beagleplay";
+
+    fragment@0 {
+        target-path = "/";
+        __overlay__ {
+            // USR 버튼을 위한 커스텀 노드 생성
+            beagleplay_usr_button {
+                // Rust 모듈과 매칭될 compatible 문자열
+                compatible = "beagleplay,usr-button";
+                label = "BeaglePlay USR Button";
+
+                // BeaglePlay의 GPIO0_18 핀 사용 (보통 main_gpio0로 맵핑됨)
+                // 버튼 회로에 따라 GPIO_ACTIVE_LOW 또는 GPIO_ACTIVE_HIGH 지정
+                gpios = <&main_gpio0 18 GPIO_ACTIVE_LOW>;
+
+                // 인터럽트 컨트롤러를 해당 GPIO 뱅크로 지정
+                interrupt-parent = <&main_gpio0>;
+                
+                // 18번 핀, 하강 에지(버튼을 누르는 순간)에서 인터럽트 발생
+                interrupts = <18 IRQ_TYPE_EDGE_FALLING>;
+            };
+        };
+    };
+};
