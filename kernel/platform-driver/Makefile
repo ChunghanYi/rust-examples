@@ -8,7 +8,7 @@ PWD := $(shell pwd)
 
 .PHONY: modules
 modules:
-	$(MAKE) ARCH=arm64 LLVM=1 -C $(KDIR) M=$(PWD) modules
+	$(MAKE) LLVM=1 -C $(KDIR) M=$(PWD) modules
 
 .PHONY: clean
 clean:
